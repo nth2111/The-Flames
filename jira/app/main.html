@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src='./../oss/angular.min.js'></script>
+  <script src='./../oss/jquery.min.js'></script>
+  <script src='./../libs/utils.js'></script>
+  <script src='./../libs/autotest.js'></script>
+  <script src='./js/main.js'></script>
+  <link rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico' />
+  <link rel="stylesheet" href="/app/css/main.css" />
+</head>
+
+<body ng-app="ExtensionMenu" ng-controller="ExtensionMenuController">
+  <ul id="action-menu">
+    <li ng-click="openConfigPage()">Thiết lập</li>
+    <li ng-click="createDailyReport()">Thực hiện daily report</li>
+    <li ng-click="openWorkLogPage()">Nhật ký công việc</li>
+    <li ng-click="schedulerConfig()">Cài đặt nhắc nhở</li>
+  </ul>
+</body>
+
+</html>

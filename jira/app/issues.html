@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <script src='./../oss/angular.min.js'></script>
+  <script src='./../oss/jquery.min.js'></script>
+  <script src='./../oss/moment.min.js'></script>
+  <script src='./../oss/select2/select2.min.js'></script>
+  <script src='./../libs/config.js'></script>
+  <script src='./../libs/utils.js'></script>
+  <script src='./../libs/jirafunction.js'></script>
+  <script src='./js/issues.js'></script>
+  <link rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico' />
+  <link rel="stylesheet" href="./../oss/select2/select2.min.css" />
+  <link rel="stylesheet" href="/app/css/issues.css" />
+  <title>ISSUES</title>
+</head>
+
+<body ng-app="Issues" ng-controller="IssuesController">
+  <div class="fixed-header">
+    <h3 class="title">MY ISSUES</h3>
+    <div class="button-control">
+      <button class="button-save" ng-click="saveChange()">Lưu</button>
+      <button class="button-refresh" ng-click="revertData()">Quay lại</button>
+    </div>
+  </div>
+  <div>
+    <form name="worklogForm" novalidate>
+      <table border="1" ng-repeat="(key, projectIssues) in issues">
+        <tbody>
+          <tr>
+            <td colspan="3">{{key}}</td>
+          </tr>
+          <tr ng-repeat-start="parentIssue in projectIssues" ng-init="getIssueInfo(parentIssue)">
+            <td>{{$index + 1}}</td>
+            <td bgcolor="green">{{parentIssue.key}}</td>
+            <td bgcolor="green">
+              <img ng-src="{{parentIssue.fields.issuetype.iconUrl}}">
+            </td>
+            <td bgcolor="green">{{parentIssue.fields.summary}}</td>
+            <td bgcolor="green">
+              <select ng-init="initMultiSelect(parentIssue.fields)" class="select2" ng-model="parentIssue.fields.__component">
+                <option ng-repeat="item in getComponents(key)" value="{{item.id}}">{{item.name}}</option>
+              </select>
+            </td>
+            <td bgcolor="green">{{parentIssue.fields[productKey]}}</td>
+          </tr>
+          <tr ng-repeat="subIssue in parentIssue.fields.subtasks" ng-init="getIssueInfo(subIssue)">
+            <td>{{$index + 1}}</td>
+            <td>{{subIssue.key}}</td>
+            <td>
+              <img ng-src="{{subIssue.fields.issuetype.iconUrl}}">
+            </td>
+            <td>{{subIssue.fields.summary}}</td>
+            <td>{{subIssue.fields.components.name}}</td>
+            <td>{{subIssue.fields['productKey']}}</td>
+          </tr>
+          <tr ng-repeat-end></tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+  <div class="note">
+    Bug not linked
+    <table>
+      <tr ng-repeat="issue in bugNotLinked">
+        <td>{{issue.key}}</td>
+        <td>{{issue.fields.summary}}</td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

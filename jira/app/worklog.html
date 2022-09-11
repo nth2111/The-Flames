@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src='./../oss/angular.min.js'></script>
+    <script src='./../oss/jquery.min.js'></script>
+    <script src='./../oss/moment.min.js'></script>
+    <script src='./../libs/config.js'></script>
+    <script src='./../libs/utils.js'></script>
+    <script src='./../libs/jirafunction.js'></script>
+    <script src='./js/worklog.js'></script>
+    <link rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico' />
+    <link rel="stylesheet" href="/app/css/worklog.css" />
+    <title>NHẬT KÝ CÔNG VIỆC</title>
+</head>
+
+<body ng-app="Worklog" ng-controller="WorklogController">
+    <div class="fixed-header">
+        <h3 class="title">NHẬT KÝ CÔNG VIỆC <input type="date" ng-model="from" ng-change="dateChanged()"> <span class="title-span">-></span><input type="date" ng-model="to" ng-change="dateChanged()"></h3>
+        <div class="button-control">
+            <button class="button-save" ng-click="saveChange()">Lưu</button>
+            <button class="button-refresh" ng-click="revertData()">Quay lại</button>
+        </div>
+    </div>
+    <div>
+        <form name="worklogForm" novalidate>
+            <table border="1" class="worklog-table">
+                <thead>
+                    <tr>
+                        <th ng-repeat="header in headers">{{header}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat-start="date in dateRange">
+                        <td rowspan="{{getRowSpan(date.date) + 1}}" bgcolor="{{getBgColor(date, worklogs[date.date])}}">
+                            {{date.date | date : 'dd/MM/yyyy'}}</td>
+                        <td colspan="{{headers.length - 3}}" bgcolor="{{!isOffDay(date) ? '#ffffff' : getBgColor(date, worklogs[date.date])}}" class="text-right total-row">
+                            <span ng-if="!isOffDay(date)">Tổng</span>&nbsp;
+                        </td>
+                        <td bgcolor="{{!isOffDay(date) ? '#ffffff' : getBgColor(date, worklogs[date.date])}}" class="total-row">
+                            <span ng-if="!isOffDay(date)">{{calTotalWorklog(worklogs[date.date])}}</span>
+                        </td>
+                        <td bgcolor="{{!isOffDay(date) ? '#ffffff' : getBgColor(date, worklogs[date.date])}}" class="total-row">
+                            <button type="button" class="btn btn-primary" ng-click="addNewWorklog(date.date)" href="">Tạo</button>
+                        </td>
+                    </tr>
+                    <tr ng-if="worklogs[date.date] && !task.isDel" ng-repeat="task in worklogs[date.date] track by $index">
+                        <td>
+                            <input ng-model=task.key required ng-change="getTaskInfo(task)">
+                        </td>
+                        <td>
+                            <input ng-model=task.description ng-init="decodeEntities(task.description)" required>
+                        </td>
+                        <td>
+                            <select ng-model="task.attributeValue" required>
+                <option ng-repeat="type in tow" value="{{type}}">{{type}}</option>
+              </select>
+                        </td>
+                        <td>
+                            <input ng-init="parseNumberValue(task)" ng-model=task.worked required type="number"></td>
+                        <td>
+                            <a href="" ng-click="deleteWorklog(task, $index, date.date)">Xóa</a>
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end=""></tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="note">
+        Chú thích:
+        <table>
+            <tr>
+                <td bgcolor="#fff" width="100px"></td>
+                <td>Log đủ</td>
+                <td bgcolor="{{bgColor.over}}" width="100px"></td>
+                <td>Log thừa</td>
+                <td bgcolor="{{bgColor.off}}" width="100px"></td>
+                <td>Ngày nghỉ (cuối tuần/nghỉ phép, ... Không tính nghỉ lễ)</td>
+                <td bgcolor="{{bgColor.warn}}" width="100px"></td>
+                <td>Log thiếu</td>
+                <td bgcolor="{{bgColor.err}}" width="100px"></td>
+                <td>Chưa log</td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

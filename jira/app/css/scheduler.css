@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+}
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #6495ED;
+  color: #fff;
+  height: 45px;
+  padding: 0 10px 10px 10px;
+}
+
+.scheduler-content {
+  margin-top: 55px;
+  border: 1px solid #ccc;
+  max-height: calc(100vh - 110px);
+  overflow: auto;
+}
+
+.button-control {
+  float: right;
+  padding-top: 10px;
+}
+
+.button-control::after {
+  clear: both;
+}
+
+.title {
+  float: left;
+  font-size: 18px;
+}
+
+table.scheduler {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+}
+
+table td select {
+  width: 100%;
+  text-align: center;
+}
+
+[ng-click] {
+  cursor: pointer;
+}
+
+.button-preview {
+  color: #52c7f9;
+}
+
+a[ng-click]:hover {
+  font-weight: bold;
+}
+
+.button-control button {
+  height: 35px;
+  cursor: pointer;
+  border: 5px;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  margin-left: 10px;
+}
+
+th {
+  background-color: aquamarine;
+}
+
+.scheduler {
+  font-size: 13px;
+}
+
+.button-remove {
+  color: red;
+}
+
+
+.button-save {
+  background-color: #0000FF;
+}
+
+.button-revert {
+  background-color: #7CFC00;
+}
+
+.button-resert {
+  background-color: red;
+}
+
+.style-button {
+  text-align: center;
+}

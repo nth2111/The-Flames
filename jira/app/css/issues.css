@@ -1,0 +1,94 @@
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #333;
+    color: #fff;
+    height: 45px;
+    padding: 0 10px 10px 10px;
+}
+
+form {
+    margin-top: 55px;
+    border: 1px solid #ccc;
+    max-height: calc(100vh - 110px);
+    overflow: auto;
+}
+
+table.worklog-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: aquamarine;
+}
+
+.ng-invalid:not(form) {
+    border: 1px solid red !important;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+td input,
+td textarea,
+td select {
+    border: none;
+    width: 100%
+}
+
+.title {
+    float: left;
+}
+
+.button-control {
+    float: right;
+    padding-top: 10px;
+}
+
+.button-control::after {
+    clear: both;
+}
+
+.button-control button {
+    width: 100px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.total-row {
+    color: #fff
+}
+
+.total-row a {
+    color: #fff
+}
+
+.note {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #333;
+    color: #fff;
+    height: 40px;
+    padding: 0 0 10px 10px;
+}
+
+.select2 {
+    min-width: 150px;
+}

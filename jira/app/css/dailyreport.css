@@ -1,0 +1,219 @@
+body {
+    display: none;
+}
+
+body.apploaded {
+    display: block;
+    width: 85%;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #fff;
+    padding-left: 70px;
+    font-size: 27px;
+    margin: 0;
+    background-color: #6495ED;
+    line-height: 2;
+    border-top-right-radius: 6px;
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.issuse {
+    line-height: 32px;
+}
+
+div.table {
+    margin-top: 15px;
+}
+
+.font {
+    font-size: 13px;
+}
+
+div.table .table-row {
+    border-bottom: 1px solid #ccc;
+}
+
+div.table .table-row .table-col {
+    float: left;
+    margin: 5px 0;
+}
+
+#task-content-table .table-row.task {
+    background: #555;
+    color: #fff;
+}
+
+div.table .table-header {
+    width: calc(100% - 17px);
+    font-weight: bold;
+}
+
+div.table .table-header .table-row {
+    border-bottom: 1px solid #000;
+}
+
+div.table .table-body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 65vh;
+}
+
+.col-1 {
+    width: 8.333333333333334%;
+}
+
+.col-2 {
+    width: 16.666666666666668%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 33.333333333333336%;
+}
+
+.col-5 {
+    width: 41.66666666666667%;
+}
+
+.email-title {
+    border-bottom: 1px solid #ddd;
+    font-size: 15px
+}
+
+.extent-options {
+    border-left: 1px solid #ccc;
+}
+
+.daily-report-btn-control {
+    text-align: left;
+    display: flex;
+    margin-left: auto;
+    width: 185px;
+    margin-bottom: 20px;
+}
+
+.daily-report-btn-control button {
+    margin-right: 15px;
+    height: 40px;
+    border: 5px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.daily-report-btn-control .button-send {
+    
+    background-color: #0000FF;
+    color: #fff;
+}
+.daily-report-btn-control .button-refresh {
+    background-color: #7CFC00;
+    color: #fff;
+}
+
+
+#left-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 650px;
+    height: 100vh;
+    background: #ffffff;
+    border: 2px solid #000;
+    border-right: none
+}
+
+#left-panel .task-list {
+    padding: 15px
+}
+
+#left-panel .task-list .make-report {
+    display: none
+}
+
+#left-panel #close-left-panel {
+    cursor: pointer
+}
+
+.form-control {
+    width: 100%;
+}
+
+.td-has-input {
+    padding: 0
+}
+
+.td-has-input input,
+.td-has-input textarea,
+.td-has-input select {
+    border: none;
+    width: 100%
+}
+
+.td-has-input textarea {
+    resize: vertical;
+}
+
+.today-task-control {
+    margin: 0 0 4px 756px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.td-has-input .summary {
+    text-align: left !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.ng-invalid:not(form) {
+    border: 1px solid red !important;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+.main-daily-report {
+    border: 1px #6495ED solid;
+    border-radius: 6px;
+}
+
+.send-informations {
+    padding: 10px 20px 0;
+
+}
+
+.send-informations table tr {
+    line-height: 2.5;
+}
+
+.report-email-content {
+    padding-left: 20px;
+}
+
+input[type="text"] { 
+    height: 20px;
+    padding-left: 10px;
+}
+
+.report-outtro {
+    padding-top: 20px;
+}

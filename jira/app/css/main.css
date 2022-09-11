@@ -1,0 +1,75 @@
+body,
+#action-menu {
+    padding: 0;
+    margin: 0;
+}
+
+#action-menu {
+    width: 200px;
+}
+
+#action-menu {
+    background-color: #333;
+}
+
+#action-menu li {
+    list-style-type: none;
+    min-height: 30px;
+    cursor: pointer;
+    background-color: #333;
+    color: beige;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 2.2;
+    padding: 0px 15px;
+}
+
+#action-menu li:hover {
+    background-color: #111;
+    color: #fff;
+}
+
+#action-menu li.content-open {
+    background-color: #555;
+    width: 100%;
+}
+
+#action-menu li.content-open span {
+    color: #fff
+}
+
+.cicd-report-temp {
+    background: #fff;
+    width: 700px;
+}
+
+.cicd-report-temp table {
+    margin: 0 auto;
+}
+
+.header-button {
+    width: 100%;
+    background: #111111;
+    text-align: right
+}
+
+.header-button .close {
+    background: red;
+    color: #fff;
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+
+.header-button .send-mail {
+    background: green;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+
+.cicd-report-table {
+    padding: 15px;
+}

@@ -1,0 +1,123 @@
+body {
+    margin: 0
+}
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #6495ED;
+    color: #fff;
+    height: 45px;
+    padding: 0 10px 10px 10px;
+}
+
+input[type="date"] { 
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+.title-span {
+    padding-left: 15px;
+}
+
+form {
+    margin-top: 55px;
+    border: 1px solid #ccc;
+    max-height: calc(100vh - 110px);
+    overflow: auto;
+}
+
+table.worklog-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: aquamarine;
+}
+
+.ng-invalid:not(form) {
+    border: 1px solid red !important;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+td input,
+td textarea,
+td select {
+    border: none;
+    width: 100%
+}
+
+.title {
+    float: left;
+    font-size: 18px;
+}
+
+.button-control {
+    float: right;
+    padding-top: 10px;
+}
+
+.button-control::after {
+    clear: both;
+}
+
+.button-control button {
+    height: 35px;
+    cursor: pointer;
+    height: 40px;
+    border: 5px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.total-row span {
+    color: #fff;
+    font-weight: bold;
+    background-color: #0000FF;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.total-row a {
+   color: #000;
+}
+
+.note {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #333;
+    color: #fff;
+    height: 40px;
+    padding: 0 0 10px 10px;
+}
+
+.button-save {
+    width: 80px;
+    background-color: #0000FF;
+    margin-right: 10px;
+}
+
+.button-refresh {
+    width: 100px;
+    background-color: #7CFC00;
+}
+

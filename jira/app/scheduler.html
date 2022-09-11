@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <script src='./../oss/angular.min.js'></script>
+  <script src='./../oss/jquery.min.js'></script>
+  <script src='./../libs/utils.js'></script>
+  <script src='./../libs/notification.js'></script>
+  <script src='./../libs/jirafunction.js'></script>
+  <script src='./../libs/schedulertask.js'></script>
+  <script src='./js/scheduler.js'></script>
+  <link rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico' />
+  <link rel="stylesheet" href="/app/css/scheduler.css" />
+  <title>LỊCH NHẮC NHỞ</title>
+</head>
+
+<body ng-app="Scheduler" ng-controller="SchedulerController">
+  <div class="fixed-header">
+    <h3 class="title">LỊCH NHẮC NHỞ</h3>
+    <div class="button-control">
+      <button ng-click="save()" class="button-save">Lưu</button>
+      <button ng-click="revertChange()" class="button-revert">Sửa</button>
+      <button ng-click="resetToDefault()" class="button-resert">Mặc định</button>
+    </div>
+  </div>
+  <div class="scheduler-content">
+    <table class="scheduler" border="1">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Desc</th>
+          <th>Day</th>
+          <th>Year</th>
+          <th>Month</th>
+          <th>Date</th>
+          <th>Hours</th>
+          <th>Minutes</th>
+          <th>Seconds</th>
+          <th>Task</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tr ng-repeat="item in scheduler">
+        <td class="style-button">{{$index + 1}}</td>
+        <td>{{allTask[item.task].name}}</td>
+        <td>
+          {{allTask[item.task].desc}}
+          <input ng-model="item.message" ng-show="item.task == 'remindByMsg'"></textarea>
+        </td>
+        <td>
+          <select ng-model="item.day" ng-init="item.day = parseTime(item.time, 'day')">
+            <option ng-repeat="day in wd track by day" value="{{day}}">{{day}}</option>
+          </select>
+        </td>
+        <td>
+          <select ng-model="item.yea" ng-init="item.yea = parseTime(item.time, 'yea')">
+            <option ng-repeat="year in makeRange()" value="{{year}}">{{year}}</option>
+          </select>
+        </td>
+        <td>
+          <select ng-model="item.mon" ng-init="item.mon = parseTime(item.time, 'mon')">
+            <option ng-repeat="month in makeRange(1, 12)" value="{{month}}">{{month}}</option>
+          </select>
+        </td>
+        <td>
+          <select ng-model="item.dat" ng-init="item.dat = parseTime(item.time, 'dat')">
+            <option ng-repeat="date in makeRange(1, getMaxDateOfMonth(item.mon, item.yea))" value="{{date}}">{{date}}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select ng-model="item.hou" ng-init="item.hou = parseTime(item.time, 'hou')">
+            <option ng-repeat="hour in makeRange(0, 23)" value="{{hour}}">{{hour}}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select ng-model="item.min" ng-init="item.min = parseTime(item.time, 'min')">
+            <option ng-repeat="min in makeRange(0, 59)" value="{{min}}">{{min}}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select ng-model="item.sec" ng-init="item.sec = parseTime(item.time, 'sec')">
+            <option ng-repeat="sec in makeRange(0, 59)" value="{{sec}}">{{sec}}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select ng-model="item.task">
+            <option ng-repeat="(task, info) in allTask track by $index" value="{{task}}">{{info.name}}</option>
+          </select>
+        </td>
+        <td width="100" class="style-button">
+          <a ng-click="preview(item)" class="button-preview">Xem</a>
+          <a ng-click="remove($index)" class="button-remove">Quay lại</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <button ng-click="add()">+</button>
+  </div>
+</body>
+
+</html>

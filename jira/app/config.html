@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>THIẾT LẬP</title>
+</head>
+<script src='./../oss/angular.min.js'></script>
+<script src='./js/config.js'></script>
+<link rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico' />
+<link rel="stylesheet" href="/app/css/config.css" />
+
+<body ng-app="Config" ng-controller="ConfigController">
+  <h2>THIẾT LẬP</h2>
+  <table>
+    <!-- <tr>
+      <th colspan="3" bgcolor="#ccc">Common:</th>
+    </tr>
+    <tr>
+      <th>Native host:</th>
+      <td><input type="text" ng-model='config.NATIVE'></td>
+      <td></td>
+    </tr> -->
+    <tr>
+      <th>Email:</th>
+      <td><input type="text" ng-model='config.USER' placeholder="Email phải viết đúng ký tự hoa thường"></td>
+    </tr>
+    <tr>
+      <th>Password:</th>
+      <td><input type="password" ng-model='config.PASSWORD'></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>JIRA:</th>
+      <td><input type="text" ng-model='config.JIRA_URL'></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Project:</th>
+      <td><input type="text" ng-model='config.PROJECT' placeholder="Mỗi Project key cách nhau dấu ;(chấm phẩy)"></td>
+    </tr>
+    <!-- <tr class="table-tr">
+      <th >Daily Report:</th>
+    </tr>
+    <tr>
+      <th>To:</th>
+      <td><input type="text" ng-model='config.DAILY_REPORT.to' placeholder="Mỗi Email cách nhau dấu ;(chấm phẩy)"></td>
+    </tr>
+    <tr>
+      <th>CC:</th>
+      <td><input type="text" ng-model='config.DAILY_REPORT.cc' placeholder="Mỗi Email cách nhau dấu ;(chấm phẩy)"></td>
+    </tr>
+    <tr>
+      <th>Sub-Project:</th>
+      <td><input type="text" ng-model='config.DAILY_REPORT.defaultProject'></td>
+    </tr>
+    <tr>
+      <th>Subject:</th>
+      <td><input type="text" ng-model='config.DAILY_REPORT.subject'></td>
+    </tr> -->
+    <!-- <tr>
+      <th>Logwork:</th>
+      <td><input type="checkbox" ng-model='config.DAILY_REPORT.logwork'></td>
+    </tr> -->
+  </table>
+  <div class="btn">
+    <button id="save" ng-click="save()">Thiết lập</button>
+  </div>
+</body>
+
+</html>

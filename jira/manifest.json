@@ -1,0 +1,47 @@
+{
+  // Extension ID: knldjmfmopnpolahpmmgbagdohdnhkik
+  "name": "TheFlamers",
+  "version": "1.1",
+  "description": "Build an Extension!",
+  "permissions": ["nativeMessaging",
+    "webRequest",
+    "tabs",
+    "*://*/*",
+    "notifications",
+    "cookies"
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": ["libs/clearcahe.js",
+      "libs/config.js",
+      "oss/jquery.min.js",
+      "oss/moment.min.js",
+      "libs/notification.js",
+      "libs/utils.js",
+      "libs/jirafunction.js",
+      "libs/schedulertask.js",
+      "libs/scheduler.js",
+      "libs/message.js",
+      "background/main.js"
+    ]
+  },
+  "options_ui": {
+    "page": "app/config.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": [
+    "img/my-baby.png"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["oss/jquery.min.js", "libs/autotest.js"]
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "app/main.html",
+    "default_icon": "img/my-baby.png"
+  }
+}

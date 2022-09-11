@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script src='./../oss/jquery.min.js'></script>
+  <script src='./../oss/angular.min.js'></script>
+  <script src='./../oss/moment.min.js'></script>
+  <script src='./../libs/config.js'></script>
+  <script src='./../libs/utils.js'></script>
+  <script src='./../libs/jirafunction.js'></script>
+  <script src='./js/dailyreport.js'></script>
+  <link rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico' />
+  <link rel="stylesheet" href="/app/css/dailyreport.css" />
+  <title>BÁO CÁO CÔNG VIỆC HẰNG NGÀY</title>
+</head>
+
+<body ng-app="DailyReport" ng-controller="DailyReportController" ng-click="onBodyClicked($event)"
+  class="{{appLoaded ? 'apploaded' : ''}}">
+  <form name="dailyReportForm" novalidate>
+    <div class="main-daily-report">
+      <nav class="nav js-nav">
+        <header class="nav-header col-md-9">
+            <h2><i class="fas fa-tasks"></i>BÁO CÁO CÔNG VIỆC HẰNG NGÀY</h2>
+        </header>
+      </nav>
+      <main class="content js-content task-list main-scroll-content">
+        <div class="send-informations">
+          <table>
+            <tr>
+              <td>To:</td>
+              <td><input type="text" style="width:348px" ng-model="toList" required></td>
+            </tr>
+            <tr>
+              <td>CC:</td>
+              <td><input type="text" style="width:348px" ng-model="ccList" required></td>
+            </tr>
+            <tr>
+              <td>Subject:</td>
+              <td><input type="text" ng-model="project" style="width:100px" required><input type="text"
+                  ng-model="subject" style="width:244px" required></td>
+            </tr>
+          </table>
+          <div class="extent-options">
+            <table>
+              <tr>
+                <td>Logwork:</td>
+                <td><input type="checkbox" id="cb-logwork" ng-model="logwork"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h5 class="email-title">Email:</h5>
+        <div class="report-email-content">
+
+          <style>
+            .send-informations,
+            .send-informations .extent-options {
+              height: 100px;
+            }
+
+            .send-informations table,
+            .send-informations .extent-options {
+              float: left;
+            }
+
+            .send-informations .extent-options {
+              padding-left: 25px;
+              margin-left: 25px;
+            }
+
+            .report-email-content textarea:focus,
+            .report-email-content input:focus {
+              outline: none !important;
+              border: none !important;
+              box-shadow: none !important
+            }
+
+            .report-email-content .report-intro textarea,
+            .report-email-content .report-outtro textarea {
+              padding: 0;
+              border: none;
+              min-width: 100%
+            }
+
+            .report-email-content .report-info {
+              margin-top: 15px;
+              border-collapse: collapse;
+              width: 422px;
+            }
+
+            table tbody tr {
+              background: #fff;
+              border-bottom: 1px solid #ccc;
+              color: #333;
+            }
+
+            .report-info,
+            #task-info,
+            #next-task-info {
+              border: 1px solid #ccc;
+            }
+
+            table th {
+              background: #205081;
+              color: #fff;
+              text-align: left;
+              padding: 5px 8px;
+              vertical-align: top;
+            }
+
+            .report-info td,
+            .report-info th,
+            #task-info td,
+            #task-info th,
+            #next-task-info td,
+            #next-task-info th {
+              border: 1px solid #ccc;
+            }
+
+            .report-email-content .report-info td {
+              padding: 0 15px
+            }
+
+            .report-email-content .report-info th input,
+            .report-email-content .report-info td input {
+              padding: 0;
+              border: none
+            }
+
+            .report-email-content .report-info td {
+              width: 200px
+            }
+
+            .report-email-content .task-info-wrapper {
+              max-height: 350px
+            }
+
+            .report-email-content .next-task-info-wrapper {
+              max-height: 200px
+            }
+
+            .report-email-content .task-info-wrapper,
+            .report-email-content .next-task-info-wrapper {
+              overflow: auto
+            }
+
+            .report-email-content .task-info-wrapper .task-info th,
+            .report-email-content .task-info-wrapper .next-task-info th,
+            .report-email-content .next-task-info-wrapper .task-info th,
+            .report-email-content .next-task-info-wrapper .next-task-info th {
+              text-align: center;
+              white-space: pre-wrap
+            }
+
+            .report-email-content .task-info-wrapper .task-info td,
+            .report-email-content .task-info-wrapper .next-task-info td,
+            .report-email-content .next-task-info-wrapper .task-info td,
+            .report-email-content .next-task-info-wrapper .next-task-info td {
+              height: 25px
+            }
+
+            .report-email-content .task-info-wrapper .task-info th,
+            .report-email-content .task-info-wrapper .task-info td,
+            .report-email-content .task-info-wrapper .next-task-info th,
+            .report-email-content .task-info-wrapper .next-task-info td,
+            .report-email-content .next-task-info-wrapper .task-info th,
+            .report-email-content .next-task-info-wrapper .task-info td,
+            .report-email-content .next-task-info-wrapper .next-task-info th,
+            .report-email-content .next-task-info-wrapper .next-task-info td {
+              padding: 0 5px;
+              vertical-align: middle
+            }
+
+            .report-email-content .task-info-wrapper .task-info th input,
+            .report-email-content .task-info-wrapper .task-info td input,
+            .report-email-content .task-info-wrapper .next-task-info th input,
+            .report-email-content .task-info-wrapper .next-task-info td input,
+            .report-email-content .next-task-info-wrapper .task-info th input,
+            .report-email-content .next-task-info-wrapper .task-info td input,
+            .report-email-content .next-task-info-wrapper .next-task-info th input,
+            .report-email-content .next-task-info-wrapper .next-task-info td input {
+              text-align: center;
+              padding: 0;
+              border: none
+            }
+          </style>
+          <div class="report-intro">
+            <textarea id="report-intro-message" ng-model="mailHeader"></textarea>
+          </div>
+          <table border="1" class="report-info" style="table-layout:fixed">
+            <col style='width:150px'>
+            <col style='width:200px'>
+            <tr>
+              <th width="150">Date</th>
+              <td id="lbl-date">
+                <input type="date" class="form-control" id="txt-daily-report-date" ng-model="reportDate"
+                  ng-change="changeDate()" required>
+              </td>
+            </tr>
+            <tr>
+              <th width="150">Project</th>
+              <td id="lbl-project">
+                <input type="text" class="form-control" id="txt-daily-report-project" ng-model="project" required>
+              </td>
+            </tr>
+          </table>
+          <div class="clear-fix row">&nbsp;</div>
+          <div class="row">
+            <h5 class="col-md-8 font">1. Tổng hợp nhiệm vụ trong ngày <span class="remove-before-send">(<a class="open-jira-tasks-dialog"
+                  href="" class="remove-before-send" data-task="today" ng-click="openTaskList('today')">Cập nhật danh sách</a>)</span>:</h5>
+                <div class="text-right col-md-4 today-task-control control-button control-button-right">
+                  <button class="btn btn-primary remove-before-send" id="add-today-task-btn" ng-click="addTodayTaskBlankRow()">+</button>
+                  <!-- <td ng-if="!task.key" class="remove-before-send"><button ng-click="removeRow($index)">x</button></td> -->
+                  <button ng-if="!task.key" class="btn btn-primary remove-before-send" id="remove-today-task-btn"  ng-click="removeRowToday($index)">-</button>
+                </div>
+          </div>
+          <div class="task-info-wrapper">
+            <style>
+              .xl6520313 {
+                padding-top: 1px;
+                padding-right: 1px;
+                padding-left: 1px;
+                text-align: general;
+                vertical-align: middle;
+                white-space: nowrap;
+              }
+            </style>
+            <table border="1" id="task-info" class="task-info" cellpadding=0 cellspacing=0 width=1986
+              style='border-collapse:collapse;table-layout:fixed;width:1175px;'>
+              <col style='width:50px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:155px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:255px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:100px;mso-width-source:userset;mso-width-alt:512;' class="remove-before-send">
+              <col style='width:85px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:85px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:95px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:350px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:350px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:350px;mso-width-source:userset;mso-width-alt:512;'>
+              <thead>
+                <tr>
+                  <th style='width:50px;' width="50" class="xl6520313">No</th>
+                  <th style='width:155px;' width="155" class="xl6520313">JIRA</th>
+                  <th style='width:255px;' width="255" class="xl6520313">Task Description</th>
+                  <th style='width:100px;' width="85" class="xl6520313 remove-before-send">TOW</th>
+                  <th style='width:85px;' width="85" class="xl6520313">Complete (%)</th>
+                  <th style='width:85px;' width="85" class="xl6520313">Actual effort (h)</th>
+                  <th style='width:95px;' width="95" class="xl6520313">Due date</th>
+                  <th style='width:350px;' width="350" class="xl6520313">Output</th>
+                  <th style='width:350px;' width="350" class="xl6520313">Issue</th>
+                  <th style='width:350px;' width="350" class="xl6520313">Action</th>
+                </tr>
+              </thead>
+              <tbody id="task-info-table-body">
+                <tr ng-repeat="task in todayTask track by $index">
+                  <td class="text-center">{{$index + 1}}</td>
+                  <td><a target="_blank" href="{{jiraURL}}browse/{{task.key}}">{{task.key}}</a></td>
+                  <td><a target="_blank" href="{{jiraURL}}browse/{{task.key}}">{{task.fields.summary}}</a></td>
+                  <td class="text-center remove-before-send">
+                    <select ng-model="task.tow" required ng-init="detectTypeOfWork(task)">
+                      <option ng-repeat="tow in tows" value="{{tow}}">{{tow}}</option>
+                    </select>
+                  </td>
+                  <td class="td-has-input text-center"><input type="number" class="txt-completepercent" unit="%"
+                      ng-model="task.progress" ng-change="completeChange(task)" min=0 max=100 required /></td>
+                  <td class="td-has-input text-center"><input type="number" class="txt-actual-effort" unit="h"
+                      ng-model="task.actualEffort" min=0 max=8 ng-change="effortChange(task)" required /></td>
+                  <td class="text-center">
+                    {{task.fields.duedate | date : 'dd/MM/yyyy'}}</td>
+                  <td class="td-has-input"><textarea autoresize required ng-model="task.output"></textarea></td>
+                  <td class="td-has-input"><textarea autoresize></textarea></td>
+                  <td class="td-has-input"><textarea autoresize></textarea></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="clear-fix row">&nbsp;</div>
+          <div class="row">
+            <h5 class="col-md-8 font">2. Nhiệm vụ trong ngày làm việc tiếp theo <span class="remove-before-send">(<a class="open-jira-tasks-dialog"
+                  href="" class="remove-before-send" ng-click="openTaskList('next')">Cập nhật danh sách</a>)</span>:</h5>
+          </div>
+          <div class="text-right col-md-4 today-task-control control-button control-button-right">
+            <button class="btn btn-primary remove-before-send" id="add-next-task-btn"
+              ng-click="addNextTaskBlankRow()">+</button>
+          </div>
+          <div class="next-task-info-wrapper">
+            <table border="1" id="next-task-info" class="next-task-info" cellpadding=0 cellspacing=0 width=485
+              style='border-collapse:collapse;table-layout:fixed;width:630px;'>
+              <col style='width:50px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:150px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:400px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:85px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:95px;mso-width-source:userset;mso-width-alt:512;'>
+              <thead>
+                <tr>
+                  <th style='width:50px;' width="50" class="xl6520313">No</th>
+                  <th style='width:150px;' width="150" class="xl6520313">JIRA</th>
+                  <th style='width:400px;' width="255" class="xl6520313">Task Description</th>
+                  <th style='width:85px;' width="85" class="xl6520313">Actual effort (h)</th>
+                  <th style='width:95px;' width="95" class="xl6520313">Due date</th>
+                </tr>
+              </thead>
+              <tbody id="next-task-info-table-body">
+                <tr ng-repeat="task in nextTask track by $index">
+                  <td class="text-center">{{$index + 1}}</td>
+                  <td>{{task.key || '#'}}</td>
+                  <td class="td-has-input"><input class="summary" ng-model="task.fields.summary" required /></td>
+                  <td class="td-has-input"><input type="text" ng-model="task.effort" required></td>
+                  <td>
+                    <input type="text" class="form-control" id="txt-daily-report-date" ng-model="task.fields.duedate"
+                      required>
+                  </td>
+                  <td ng-if="!task.key" class="remove-before-send"><button ng-click="removeRow($index)">x</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <h5 class="col-md-8 font">3. Các vấn đề gặp phải <span class="remove-before-send">(<a class="open-jira-tasks-dialog"
+                  href="" class="remove-before-send" ng-click="openTaskList('issue')">Cập nhật danh sách</a>)</span>:</h5>
+          </div>
+          <div class="text-right col-md-4 today-task-control control-button control-button-right">
+            <button class="btn btn-primary remove-before-send" id="add-issuse-btn"
+              ng-click="addIssuse()">+</button>
+          </div>
+          <div class="next-task-info-wrapper">
+            <table border="1" id="next-task-info" class="next-task-info" cellpadding=0 cellspacing=0 width=485
+              style='border-collapse:collapse;table-layout:fixed;width:630px;'>
+              <col style='width:50px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:150px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:400px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:180px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:130px;mso-width-source:userset;mso-width-alt:512;'>
+              <col style='width:150px;mso-width-source:userset;mso-width-alt:512;'>
+              <thead class="issuse">
+                <tr>
+                  <th style='width:50px;' width="50" class="xl6520313">No</th>
+                  <th style='width:150px;' width="150" class="xl6520313">Summary</th>
+                  <th style='width:400px;' width="255" class="xl6520313">Cause</th>
+                  <th style='width:120px;' width="120" class="xl6520313">Impact</th>
+                  <th style='width:110px;' width="110" class="xl6520313">Action</th>
+                  <th style='width:120px;' width="120" class="xl6520313">Create Q&A?</th>
+                </tr>
+              </thead>
+              <tbody id="next-task-info-table-body">
+                <tr ng-repeat="task in nextTask track by $index">
+                  <td class="text-center">{{$index + 1}}</td>
+                  <td>{{task.key || '#'}}</td>
+                  <td class="td-has-input"><input class="summary" ng-model="task.fields.summary" required /></td>
+                  <td class="td-has-input"><input type="text" ng-model="task.effort" required></td>
+                  <td>
+                    <input type="text" class="form-control" id="txt-daily-report-date" ng-model="task.fields.duedate"
+                      required>
+                  </td>
+                  <td></td>
+                  <td ng-if="!task.key" class="remove-before-send"><button ng-click="removeRow($index)">x</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="clear-fix row">&nbsp;</div>
+          <div class="report-outtro">
+            <textarea id="report-outtro-message" ng-model="mailFooter"></textarea>
+          </div>
+        </div>
+        <div id="left-panel" class="main-daily-task" ng-show="showTaskList">
+          <a id="close-left-panel" ng-click="closeTaskList()">&#10006;</a>
+          <main class="content js-content task-list main-scroll-content">
+            <div class="table task-table">
+              <div class="table-header">
+                <div class="table-row row">
+                  <div class="table-col col-1">#</div>
+                  <div class="table-col col-2">ID</div>
+                  <div class="table-col col-1">Type</div>
+                  <div class="table-col col-4">Summary</div>
+                  <div class="table-col col-2">Status</div>
+                  <div class="table-col col-2">Due Date</div>
+                </div>
+              </div>
+              <div class="table-body" id="task-content-table">
+                <div class="table-row row {{item.type}}" ng-repeat="item in allTasks track by item.key">
+                  <div class="table-col col-1"><input type="checkbox" ng-model="item.checked"
+                      ng-change="toggleTask(item)">
+                  </div>
+                  <div class="table-col col-2">{{item.key}}</div>
+                  <div class="table-col col-1"><img ng-src="{{item.fields.issuetype.iconUrl}}"/></div>
+                  <div class="table-col col-4">{{item.fields.summary}}</div>
+                  <div class="table-col col-2">{{item.fields.status.name}}</div>
+                  <div class="table-col col-2">{{item.fields.duedate}}</div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </main>
+      <div class="text-right daily-report-btn-control control-button-right col-md-12">
+        <button class="btn btn-primary button-send" id="btn-send-mail" ng-click="sendEmail()">Gửi</button>
+        <button class="btn btn-primary button-refresh" id="btn-send-mail" ng-click="reMake()">Làm mới</button>
+      </div>
+    </div>
+  </form>
+</body>
+
+</html>
